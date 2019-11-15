@@ -1,5 +1,5 @@
 # Leaflet.js를 활용하여 서울 지하철 지도 만들기
-[!https://i.imgur.com/jvkZZ8I.png]
+![](https://i.imgur.com/jvkZZ8I.png)
 
 ## 구현 목표
 Leaflet에서 제공하는 API를 활용하여 서울 지하철 정보를 보여주는 지도 앱 구현을 목표로 하였습니다.
