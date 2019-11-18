@@ -16,9 +16,6 @@ export default {
   watch: {
     locationSelected: function(selected) {
       if (selected) {
-        // let provinceStateStation = this.$store.state.station;
-        // let provinceStateLine = this.$store.state.line;
-
         let targetIndex = metroData.findIndex(
           data =>
             data.name === this.$store.state.station &&
@@ -32,7 +29,7 @@ export default {
             Number(targetData.lat)
           );
 
-          this.map.flyTo(targetCenter, 16);
+          this.map.flyTo(targetCenter, 18);
           this.$store.state.locationSelected = false;
         }
       }
@@ -68,9 +65,9 @@ export default {
       this.map.addLayer(this.markerGroup);
     },
     initMarkers() {
-      let targetData = metroData;
+      const targetData = metroData;
 
-      for (let i = 0; i < targetData.length; i++) {
+      for (let i in targetData) {
         let metroIcon = L.icon({
           iconUrl: require(`@/assets/${targetData[i].line}.png`),
           iconSize: [25, 25]
@@ -80,9 +77,10 @@ export default {
           { icon: metroIcon }
         );
         marker.bindTooltip(
-          `<b>${metroData[i].name} (${metroData[i].line})</b><br/>
-          ${metroData[i].address}`
+          `<b>${targetData[i].name} (${targetData[i].line})</b><br/>
+          ${targetData[i].address}`
         );
+        this.markerGroup.addLayer(marker);
         marker.addTo(this.map);
       }
     }

@@ -26,7 +26,7 @@ export default {
   }),
   methods: {
     initMetroLines() {
-      for (let i = 0; i < metroData.length; i++) {
+      for (let i in metroData) {
         this.metroLines.push(`${metroData[i].name} (${metroData[i].line})`);
       }
       this.metroLines.sort();
