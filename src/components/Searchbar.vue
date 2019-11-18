@@ -11,6 +11,11 @@ export default {
   data: () => ({
     metroLines: []
   }),
+  computed: {
+    station() {
+      return this.$store.state.station;
+    }
+  },
   methods: {
     initMetroLines() {
       for (let i = 0; i < metroData.length; i++) {

@@ -8,11 +8,33 @@ import metroData from "@/data/seoulMetroData.json";
 import "../../node_modules/leaflet.markercluster/dist/leaflet.markercluster.js";
 
 export default {
+  computed: {
+    locationSelected() {
+      return this.$store.state.locationSelected;
+    }
+  },
+  watch: {
+    locationSelected: function(selected) {
+      if (selected) {
+        let provinceStateStation = this.$store.state.station;
+        let provinceStateLine = this.$store.state.station;
+
+        const targetDataIndex = metroData.findIndex(data => {
+          data.name === provinceStateStation && data.line === provinceStateLine;
+        });
+      }
+
+      if (targetDataIndex > -1) {
+        this.clearMap();
+      }
+    }
+  },
   data: () => ({
     map: null,
     tileLayer: null,
     markerGroup: null
   }),
+
   methods: {
     initMap() {
       this.map = L.map("map", { doubleClickZoom: true }).locate({
@@ -53,6 +75,13 @@ export default {
         this.onClickCluster(cluster)
       );
       this.map.addLayer(this.markerGroup);
+    }
+  },
+  clearMap() {
+    for (let i in this.map._layers) {
+      if (this.map._layers[i]._path != undefined) {
+        this.map.removeLayer(this.map._layers[i]);
+      }
     }
   },
   mounted() {
