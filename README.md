@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/jvkZZ8I.png)
 
-![](https://imgur.com/a/gqfQEP5)
+![](https://i.imgur.com/TKspOpV.mp4)
 
 ## 구현 목표
 
