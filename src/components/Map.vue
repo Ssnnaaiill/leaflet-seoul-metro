@@ -40,7 +40,6 @@ export default {
     tileLayer: null,
     markerGroup: null
   }),
-
   methods: {
     initMap() {
       this.map = L.map("map").locate({

@@ -2,7 +2,9 @@
 
 ![](https://i.imgur.com/jvkZZ8I.png)
 
-![](https://i.imgur.com/TKspOpV.mp4)
+`(+) 2019.11.18 추가`
+
+![](https://i.imgur.com/9v6y8iz.gif)
 
 ## 구현 목표
 
