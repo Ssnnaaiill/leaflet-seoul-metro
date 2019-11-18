@@ -93,14 +93,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style>
 @import "../../node_modules/leaflet.markercluster/dist/MarkerCluster.css";
 @import "../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css";
 @import "../../node_modules/leaflet/dist/leaflet.css";
 
 #map {
   height: 100%;
-  width: 100%;
+  flex: 1;
   z-index: 1;
 }
 </style>

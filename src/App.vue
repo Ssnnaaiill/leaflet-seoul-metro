@@ -1,27 +1,14 @@
 <template>
   <v-app>
     <v-content>
-      <Map />
-      <div class="top-searchbar">
-        <Searchbar />
-      </div>
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Map from "@/components/Map";
-import Searchbar from "@/components/Searchbar";
-
 export default {
-  name: "App",
-  components: {
-    Map,
-    Searchbar
-  },
-  data: () => ({
-    //
-  })
+  name: "App"
 };
 </script>
 
@@ -35,15 +22,6 @@ body {
     width: 100vw;
     height: calc(100vh - 48px);
     display: flex;
-  }
-
-  .top-searchbar {
-    width: 100%;
-    display: flex;
-    position: fixed;
-    justify-content: center;
-    z-index: 2;
-    top: 10px;
   }
 }
 </style>
