@@ -16,16 +16,25 @@ export default {
   watch: {
     locationSelected: function(selected) {
       if (selected) {
-        let provinceStateStation = this.$store.state.station;
-        let provinceStateLine = this.$store.state.station;
+        // let provinceStateStation = this.$store.state.station;
+        // let provinceStateLine = this.$store.state.line;
 
-        const targetDataIndex = metroData.findIndex(data => {
-          data.name === provinceStateStation && data.line === provinceStateLine;
-        });
-      }
+        let targetIndex = metroData.findIndex(
+          data =>
+            data.name === this.$store.state.station &&
+            data.line === this.$store.state.line
+        );
 
-      if (targetDataIndex > -1) {
-        this.clearMap();
+        if (targetIndex > -1) {
+          let targetData = metroData[targetIndex];
+          let targetCenter = new L.LatLng(
+            Number(targetData.lon),
+            Number(targetData.lat)
+          );
+
+          this.map.flyTo(targetCenter, 16);
+          this.$store.state.locationSelected = false;
+        }
       }
     }
   },
@@ -37,33 +46,15 @@ export default {
 
   methods: {
     initMap() {
-      this.map = L.map("map", { doubleClickZoom: true }).locate({
+      this.map = L.map("map").locate({
         setView: true,
-        maxZoom: 16
+        maxZoom: 18
       });
       this.tileLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
         maxZoom: 18
       });
       this.tileLayer.addTo(this.map);
-      this.map.setView(new L.LatLng(37.56, 126.985), 12);
-
-      let targetData = metroData;
-
-      for (let i = 0; i < targetData.length; i++) {
-        let metroIcon = L.icon({
-          iconUrl: require(`@/assets/${targetData[i].line}.png`),
-          iconSize: [20, 20]
-        });
-        let marker = L.marker(
-          [Number(targetData[i].lon), Number(targetData[i].lat)],
-          { icon: metroIcon }
-        );
-        marker.bindTooltip(
-          `${metroData[i].name}역 (${metroData[i].line})<br/>
-          ${metroData[i].address}`
-        );
-        marker.addTo(this.map);
-      }
+      this.map.setView(new L.LatLng(37.56, 126.988), 12);
     },
     initLayers() {
       this.markerGroup = L.markerClusterGroup({
@@ -75,23 +66,36 @@ export default {
         this.onClickCluster(cluster)
       );
       this.map.addLayer(this.markerGroup);
-    }
-  },
-  clearMap() {
-    for (let i in this.map._layers) {
-      if (this.map._layers[i]._path != undefined) {
-        this.map.removeLayer(this.map._layers[i]);
+    },
+    initMarkers() {
+      let targetData = metroData;
+
+      for (let i = 0; i < targetData.length; i++) {
+        let metroIcon = L.icon({
+          iconUrl: require(`@/assets/${targetData[i].line}.png`),
+          iconSize: [25, 25]
+        });
+        let marker = L.marker(
+          [Number(targetData[i].lon), Number(targetData[i].lat)],
+          { icon: metroIcon }
+        );
+        marker.bindTooltip(
+          `<b>${metroData[i].name} (${metroData[i].line})</b><br/>
+          ${metroData[i].address}`
+        );
+        marker.addTo(this.map);
       }
     }
   },
   mounted() {
     this.initMap();
     this.initLayers();
+    this.initMarkers();
   }
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 @import "../../node_modules/leaflet.markercluster/dist/MarkerCluster.css";
 @import "../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css";
 @import "../../node_modules/leaflet/dist/leaflet.css";

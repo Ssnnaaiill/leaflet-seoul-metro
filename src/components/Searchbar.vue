@@ -1,6 +1,13 @@
 <template>
   <div class="searchbar">
-    <v-autocomplete :items="metroLines" rounded></v-autocomplete>
+    <v-autocomplete
+      placeholder="지하철 역 검색"
+      v-model="selectedStation"
+      v-on:change="setStation(selectedStation)"
+      :items="metroLines"
+      rounded
+      autofocus
+    ></v-autocomplete>
   </div>
 </template>
 
@@ -8,21 +15,32 @@
 import metroData from "@/data/seoulMetroData.json";
 
 export default {
-  data: () => ({
-    metroLines: []
-  }),
   computed: {
     station() {
       return this.$store.state.station;
     }
   },
+  data: () => ({
+    metroLines: [],
+    selectedStation: ""
+  }),
   methods: {
     initMetroLines() {
       for (let i = 0; i < metroData.length; i++) {
-        /* eslint-disable no-console */
-        this.metroLines.push(`${metroData[i].name}역 (${metroData[i].line})`);
+        this.metroLines.push(`${metroData[i].name} (${metroData[i].line})`);
       }
       this.metroLines.sort();
+    },
+    setStation(selectedStation) {
+      let info = selectedStation.split(" ");
+      this.$store.state.station = info[0];
+      this.$store.state.line = info[1].replace("(", "").replace(")", "");
+
+      if (this.$store.state.station != null) {
+        this.$store.state.locationSelected = true;
+      } else {
+        this.$store.state.locationSelected = false;
+      }
     }
   },
   mounted() {
