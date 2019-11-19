@@ -29,7 +29,7 @@ export default {
             Number(targetData.lat)
           );
 
-          this.map.flyTo(targetCenter, 18);
+          this.map.setView(targetCenter, 18);
           this.$store.state.locationSelected = false;
         }
       }
@@ -98,7 +98,6 @@ export default {
 @import "../../node_modules/leaflet/dist/leaflet.css";
 
 #map {
-  height: 100%;
   flex: 1;
   z-index: 1;
 }
